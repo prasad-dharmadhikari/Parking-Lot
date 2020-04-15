@@ -1,4 +1,11 @@
-package PACKAGE_NAME;
+public class ParkingLotSystemException extends Exception {
+    public enum ExceptionType {
+        PARKING_LOT_FULL;
+    }
+    public ExceptionType type;
 
-public class ParkingLotSystemException {
+    public ParkingLotSystemException(ExceptionType type, String message) {
+        super(message);
+        this.type = type;
+    }
 }
