@@ -5,11 +5,15 @@ import org.junit.Test;
 public class ParkingLotSystemTest {
     ParkingLotSystem parkingLotSystem = null;
     Object vehicle = null;
+    Owner owner = null;
+    AirportPersonnel airportPersonnel = null;
 
     @Before
     public void setUp() throws Exception {
         parkingLotSystem = new ParkingLotSystem(5);
         vehicle = new Object();
+        owner = new Owner();
+        airportPersonnel = new AirportPersonnel();
     }
 
     @Test
@@ -61,5 +65,27 @@ public class ParkingLotSystemTest {
         } catch (ParkingLotSystemException e) {
             Assert.assertEquals(ParkingLotSystemException.ExceptionType.VEHICLE_ALREADY_UNPARKED_OR_WRONG_VEHICLE, e.type);
         }
+    }
+
+    @Test
+    public void givenParkingLotIsFull_OwnerShouldShowFullSign() throws ParkingLotSystemException {
+        parkingLotSystem.register(owner);
+        parkingLotSystem.park("Tata Indigo CS");
+        parkingLotSystem.park("Toyota Fortuner");
+        parkingLotSystem.park("Maruti Swift Dzire");
+        parkingLotSystem.park("Tata Hexa");
+        parkingLotSystem.park("Maruti 800");
+        Assert.assertEquals(owner.getFlag(), Owner.Flag.PARKING_IS_FULL);
+    }
+
+    @Test
+    public void givenParkingLotIsFull_SecurityStaffShouldBeUpdated() throws ParkingLotSystemException {
+        parkingLotSystem.register(airportPersonnel);
+        parkingLotSystem.park("Tata Indigo CS");
+        parkingLotSystem.park("Toyota Fortuner");
+        parkingLotSystem.park("Maruti Swift Dzire");
+        parkingLotSystem.park("Tata Hexa");
+        parkingLotSystem.park("Maruti 800");
+        Assert.assertTrue(airportPersonnel.isParkingFull());
     }
 }
