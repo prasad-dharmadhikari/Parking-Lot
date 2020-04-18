@@ -1,3 +1,9 @@
+package com.bridgelabz.parkinglot.servicetest;
+
+import com.bridgelabz.parkinglot.Observer.AirportPersonnel;
+import com.bridgelabz.parkinglot.Observer.Owner;
+import com.bridgelabz.parkinglot.exception.ParkingLotSystemException;
+import com.bridgelabz.parkinglot.service.ParkingLotSystem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,6 +85,16 @@ public class ParkingLotSystemTest {
     }
 
     @Test
+    public void givenParkingLotIsNotFull_OwnerShouldShowVacantSign() throws ParkingLotSystemException {
+        parkingLotSystem.register(owner);
+        parkingLotSystem.park("Tata Indigo CS");
+        parkingLotSystem.park("Toyota Fortuner");
+        parkingLotSystem.park("Maruti Swift Dzire");
+        parkingLotSystem.park("Tata Hexa");
+        Assert.assertEquals(owner.getFlag(), Owner.Flag.PARKING_IS_VACANT);
+    }
+
+    @Test
     public void givenParkingLotIsFull_SecurityStaffShouldBeUpdated() throws ParkingLotSystemException {
         parkingLotSystem.register(airportPersonnel);
         parkingLotSystem.park("Tata Indigo CS");
@@ -86,6 +102,15 @@ public class ParkingLotSystemTest {
         parkingLotSystem.park("Maruti Swift Dzire");
         parkingLotSystem.park("Tata Hexa");
         parkingLotSystem.park("Maruti 800");
-        Assert.assertTrue(airportPersonnel.isParkingFull());
+        Assert.assertEquals(true, airportPersonnel.isParkingFull());
+    }
+
+    @Test
+    public void givenParkingLotIsNotFull_SecurityStaffShouldBeUpdated() throws ParkingLotSystemException {
+        parkingLotSystem.register(airportPersonnel);
+        parkingLotSystem.park("Tata Indigo CS");
+        parkingLotSystem.park("Toyota Fortuner");
+        parkingLotSystem.park("Maruti Swift Dzire");
+        Assert.assertFalse(airportPersonnel.isParkingFull());
     }
 }
