@@ -32,9 +32,8 @@ public class ParkingLotSystemTest {
     @Test
     public void givenAVehicle_WhenUnParked_ShouldReturnTrue() throws ParkingLotSystemException {
         parkingLotSystem.park("Toyota Fortuner");
-        parkingLotSystem.unPark("Toyota Fortuner");
-        boolean isVehicleUnParked = parkingLotSystem.isVehicleParked();
-        Assert.assertFalse(isVehicleUnParked);
+        boolean isVehicleUnParked = parkingLotSystem.unPark("Toyota Fortuner");
+        Assert.assertTrue(isVehicleUnParked);
     }
 
     @Test
@@ -123,6 +122,6 @@ public class ParkingLotSystemTest {
         parkingLotSystem.park("Tata Hexa");
         parkingLotSystem.park("Maruti 800");
         parkingLotSystem.unPark("Maruti Swift Dzire");
-        Assert.assertEquals(owner.getFlag(), Owner.Flag.PARKING_IS_VACANT);
+        Assert.assertEquals(owner.getFlag(), Owner.Flag.PARKING_IS_FULL);
     }
 }
