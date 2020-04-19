@@ -124,4 +124,22 @@ public class ParkingLotSystemTest {
         parkingLotSystem.unPark("Maruti Swift Dzire");
         Assert.assertEquals(owner.getFlag(), Owner.Flag.PARKING_IS_FULL);
     }
+
+    @Test
+    public void givenCar_IfFoundInParkingLot_ShouldReturnTrue() throws ParkingLotSystemException {
+        parkingLotSystem.park("Tata Indigo CS");
+        parkingLotSystem.park("Toyota Fortuner");
+        parkingLotSystem.park("Maruti Swift Dzire");
+        boolean isPresent = parkingLotSystem.isVehiclePresentInLot("Toyota Fortuner");
+        Assert.assertTrue(isPresent);
+    }
+
+    @Test
+    public void givenCar_IfNotFoundInParkingLot_ShouldReturnFalse() throws ParkingLotSystemException {
+        parkingLotSystem.park("Tata Indigo CS");
+        parkingLotSystem.park("Toyota Fortuner");
+        parkingLotSystem.park("Maruti Swift Dzire");
+        boolean isPresent = parkingLotSystem.isVehiclePresentInLot("Maruti 800");
+        Assert.assertFalse(isPresent);
+    }
 }
