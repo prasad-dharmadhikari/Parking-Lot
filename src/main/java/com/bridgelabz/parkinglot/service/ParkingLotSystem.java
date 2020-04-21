@@ -5,6 +5,7 @@ import com.bridgelabz.parkinglot.Observer.Subject;
 import com.bridgelabz.parkinglot.exception.ParkingLotSystemException;
 import com.bridgelabz.parkinglot.utility.ParkingAttendant;
 
+import java.time.LocalTime;
 import java.util.*;
 
 public class ParkingLotSystem implements Subject {
@@ -14,6 +15,8 @@ public class ParkingLotSystem implements Subject {
     public HashMap<Integer, String> parkingLot;
     private List<Observer> observers = new ArrayList<Observer>();
     ParkingAttendant parkingAttendant = new ParkingAttendant(5);
+    public LocalTime arrivalTime = null;
+    public LocalTime departureTime = null;
 
     public ParkingLotSystem(int parkingLotCapacity) {
         this.parkingLotCapacity = parkingLotCapacity;
@@ -22,7 +25,6 @@ public class ParkingLotSystem implements Subject {
             parkingLot.put(itr, null);
         }
     }
-
 
     @Override
     public void register(Observer o) {
@@ -45,6 +47,7 @@ public class ParkingLotSystem implements Subject {
     public void park(String vehicle) throws ParkingLotSystemException {
         this.vehicleName = vehicle;
         parkingLot = parkingAttendant.park(vehicleName, parkingLot);
+        arrivalTime = LocalTime.now();
         this.notifyObservers();
     }
 
@@ -56,6 +59,8 @@ public class ParkingLotSystem implements Subject {
         while (parkingLotIterator.hasNext()) {
             if (parkingLotIterator.next().equals(vehicle)) {
                 parkingLotIterator.remove();
+                departureTime = LocalTime.now();
+                this.notifyObservers();
                 return true;
             }
         }
