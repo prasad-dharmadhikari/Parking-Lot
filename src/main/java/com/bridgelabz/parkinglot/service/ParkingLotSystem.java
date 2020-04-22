@@ -1,95 +1,53 @@
 package com.bridgelabz.parkinglot.service;
 
-import com.bridgelabz.parkinglot.Observer.Observer;
-import com.bridgelabz.parkinglot.Observer.Subject;
+import com.bridgelabz.parkinglot.Observer.AirportPersonnel;
+import com.bridgelabz.parkinglot.Observer.Owner;
+import com.bridgelabz.parkinglot.entity.ParkingLot;
+import com.bridgelabz.parkinglot.entity.Slot;
+import com.bridgelabz.parkinglot.entity.Vehicle;
 import com.bridgelabz.parkinglot.exception.ParkingLotSystemException;
 import com.bridgelabz.parkinglot.utility.ParkingAttendant;
+import com.google.common.collect.Multimap;
 
 import java.time.LocalTime;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Set;
 
-public class ParkingLotSystem implements Subject {
+public class ParkingLotSystem {
 
     public int parkingLotCapacity;
-    public String vehicleName;
-    public HashMap<Integer, String> parkingLot;
-    private List<Observer> observers = new ArrayList<Observer>();
-    ParkingAttendant parkingAttendant = new ParkingAttendant(5);
-    public LocalTime arrivalTime = null;
-    public LocalTime departureTime = null;
+    public int noOfParkingLots;
+    public LocalTime arrivalTime;
+    public LocalTime departureTime;
+    ParkingAttendant parkingAttendant = null;
+    Set<ParkingLot> parkingLots = null;
 
-    public ParkingLotSystem(int parkingLotCapacity) {
+    public ParkingLotSystem(int parkingLotCapacity, int noOfParkingLots) {
         this.parkingLotCapacity = parkingLotCapacity;
-        this.parkingLot = new HashMap<>();
-        for (int itr = 1; itr <= parkingLotCapacity; itr++) {
-            parkingLot.put(itr, null);
-        }
+        this.noOfParkingLots = noOfParkingLots;
+        parkingAttendant = new ParkingAttendant(this.parkingLotCapacity, this.noOfParkingLots);
     }
 
-    @Override
-    public void register(Observer o) {
-        observers.add(o);
+    public Multimap<ParkingLot, HashMap<Slot, Vehicle>> park(Vehicle vehicle) throws ParkingLotSystemException {
+        Multimap<ParkingLot, HashMap<Slot, Vehicle>> multimap = parkingAttendant.park(vehicle);
+        arrivalTime = parkingAttendant.arrivalTime;
+        return multimap;
     }
 
-    @Override
-    public void unRegister(Observer o) {
-        observers.remove(observers.indexOf(o));
+    public void unPark(Vehicle vehicle) throws ParkingLotSystemException {
+        parkingAttendant.unPark(vehicle);
+        departureTime = parkingAttendant.departureTime;
     }
 
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.sendParkingStatus(parkingLot);
-        }
+    public void register(Owner owner) {
+        parkingAttendant.register(owner);
     }
 
-
-    public void park(String vehicle) throws ParkingLotSystemException {
-        this.vehicleName = vehicle;
-        parkingLot = parkingAttendant.park(vehicleName, parkingLot);
-        arrivalTime = LocalTime.now();
-        this.notifyObservers();
+    public void register(AirportPersonnel airportPersonnel) {
+        parkingAttendant.register(airportPersonnel);
     }
 
-    public boolean unPark(String vehicle) throws ParkingLotSystemException {
-        if (!isVehiclePresentInLot(vehicle))
-            throw new ParkingLotSystemException(ParkingLotSystemException.ExceptionType.VEHICLE_ALREADY_UNPARKED_OR_WRONG_VEHICLE, "VEHICLE IS ALREADY UNPARKED");
-        Iterator<String> parkingLotIterator = getParkingLotIterator(parkingLot);
-        this.vehicleName = vehicle;
-        while (parkingLotIterator.hasNext()) {
-            if (parkingLotIterator.next().equals(vehicle)) {
-                parkingLotIterator.remove();
-                departureTime = LocalTime.now();
-                this.notifyObservers();
-                return true;
-            }
-        }
-        this.notifyObservers();
-        return true;
-    }
-
-    public boolean isVehiclePresentInLot(String vehicle) {
-        Iterator<String> parkingLotIterator = getParkingLotIterator(parkingLot);
-        while (parkingLotIterator.hasNext()) {
-            if (Objects.equals(parkingLotIterator.next(), vehicle))
-                return true;
-        }
-        return false;
-    }
-
-    private Iterator<String> getParkingLotIterator(HashMap<Integer, String> parkingLot) {
-        return parkingLot.values().iterator();
-    }
-
-    public boolean isVehicleParked() {
-        return parkingLot.containsValue(vehicleName);
-    }
-
-    public static boolean isParkingLotFull(HashMap<Integer, String> parkingLot) {
-        for (int i = 1; i <= parkingLot.size(); i++) {
-            if (parkingLot.get(i) == null)
-                return false;
-        }
-        return true;
+    public boolean isVehiclePresentInLot(Vehicle vehicle) {
+        return parkingAttendant.isVehiclePresentInLot(vehicle);
     }
 }

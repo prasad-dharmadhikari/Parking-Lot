@@ -12,7 +12,7 @@ public class AirportPersonnel implements Observer {
     }
 
     @Override
-    public void sendParkingStatus(HashMap<Integer, String> parkingLot) {
-        isParkingFull = (ParkingLotSystem.isParkingLotFull(parkingLot))? true : false;
+    public void sendParkingStatus(int currentlyOccupiedSlots, int parkingLotCapacity) {
+        isParkingFull = (currentlyOccupiedSlots > parkingLotCapacity)? true : false;
     }
 }
