@@ -1,9 +1,5 @@
 package com.bridgelabz.parkinglot.Observer;
 
-import com.bridgelabz.parkinglot.service.ParkingLotSystem;
-
-import java.util.HashMap;
-
 public class AirportPersonnel implements Observer {
     boolean isParkingFull;
 

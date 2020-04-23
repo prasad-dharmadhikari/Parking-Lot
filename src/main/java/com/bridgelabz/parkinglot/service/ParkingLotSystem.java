@@ -6,8 +6,9 @@ import com.bridgelabz.parkinglot.entity.*;
 import com.bridgelabz.parkinglot.exception.ParkingLotSystemException;
 import com.bridgelabz.parkinglot.utility.ParkingAttendant;
 import com.bridgelabz.parkinglot.utility.ParkingLotSystemUtilities;
+
 import java.time.LocalTime;
-import java.util.HashMap;
+import java.util.*;
 
 public class ParkingLotSystem {
 
@@ -51,5 +52,15 @@ public class ParkingLotSystem {
             }
         }
         return arrivalTime;
+    }
+
+    public int getWhiteCars() {
+        ArrayList whiteCars = new ArrayList();
+        for (Map.Entry<Slot, Vehicle> entry : vehicleData.entrySet()) {
+            if (entry.getValue().colour.equals("White")) {
+                whiteCars.add(entry);
+            }
+        }
+        return whiteCars.size();
     }
 }
