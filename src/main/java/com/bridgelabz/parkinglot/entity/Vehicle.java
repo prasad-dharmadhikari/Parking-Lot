@@ -8,12 +8,21 @@ public class Vehicle {
     public int plateNumber;
     public String brand;
     public String colour;
+    public DriverType driverType;
 
     public Vehicle(String name, int plateNumber, String brand, String colour) {
         this.name = name;
         this.plateNumber = plateNumber;
         this.brand = brand;
         this.colour = colour;
+    }
+
+    public DriverType getDriverType() {
+        return driverType;
+    }
+
+    public void setDriverType(DriverType driverType) {
+        this.driverType = driverType;
     }
 
     @Override
@@ -23,6 +32,7 @@ public class Vehicle {
                 ", plateNumber=" + plateNumber +
                 ", brand='" + brand + '\'' +
                 ", colour='" + colour + '\'' +
+                ", driverType=" + driverType +
                 '}';
     }
 
@@ -34,6 +44,8 @@ public class Vehicle {
         return plateNumber == vehicle.plateNumber &&
                 Objects.equals(name, vehicle.name) &&
                 Objects.equals(brand, vehicle.brand) &&
-                Objects.equals(colour, vehicle.colour);
+                Objects.equals(colour, vehicle.colour) &&
+                driverType == vehicle.driverType;
     }
+
 }
