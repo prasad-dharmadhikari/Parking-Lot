@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.bridgelabz.parkinglot.servicetest.ParkingLotSystemTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-04-23T17:25:53" hostname="PRASAD" time="0.131">
+  <properties/>
+  <testcase name="givenParkingLotOfVehicles_ShouldReturnLocationOfWhiteCars" classname="com.bridgelabz.parkinglot.servicetest.ParkingLotSystemTest" time="0.131"/>
+  <system-out><![CDATA[[Slot{slotID=7, arrivalTime=11:10:37, departureTime=null, lot=lotID=3}=Vehicle{name='Santro', plateNumber=9317, brand='HYUNDAI', colour='White', driverType=NORMAL, vehicleType=SMALL}, Slot{slotID=4, arrivalTime=11:10:37, departureTime=null, lot=lotID=4}=Vehicle{name='Honda city', plateNumber=2365, brand='HONDA', colour='White', driverType=NORMAL, vehicleType=SMALL}, Slot{slotID=6, arrivalTime=11:10:37, departureTime=null, lot=lotID=2}=Vehicle{name='Ford Figo', plateNumber=6754, brand='FORD', colour='White', driverType=NORMAL, vehicleType=SMALL}]
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
