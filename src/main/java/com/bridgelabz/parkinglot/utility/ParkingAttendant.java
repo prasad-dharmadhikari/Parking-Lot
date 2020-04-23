@@ -2,10 +2,7 @@ package com.bridgelabz.parkinglot.utility;
 
 import com.bridgelabz.parkinglot.Observer.Observer;
 import com.bridgelabz.parkinglot.Observer.Subject;
-import com.bridgelabz.parkinglot.entity.DriverType;
-import com.bridgelabz.parkinglot.entity.ParkingLot;
-import com.bridgelabz.parkinglot.entity.Slot;
-import com.bridgelabz.parkinglot.entity.Vehicle;
+import com.bridgelabz.parkinglot.entity.*;
 import com.bridgelabz.parkinglot.exception.ParkingLotSystemException;
 
 import java.time.LocalTime;
@@ -43,10 +40,13 @@ public class ParkingAttendant implements Subject {
         }
     }
 
-    public HashMap<Slot, Vehicle> park(Vehicle vehicle, DriverType driverType) throws ParkingLotSystemException {
+    public HashMap<Slot, Vehicle> park(Vehicle vehicle, DriverType driverType, VehicleType vehicleType) throws ParkingLotSystemException {
         if (vehicleData.size() > this.parkingLotCapacity)
             throw new ParkingLotSystemException(ParkingLotSystemException.ExceptionType.PARKING_LOT_FULL, "PARKING LOT FULL");
+        if (vehicleType.equals(VehicleType.LARGE))
+            largeParking(vehicle, driverType);
         vehicle.setDriverType(driverType);
+        vehicle.setVehicleType(vehicleType);
         Slot slot = new Slot();
         slotCounter = slotCounter + 1;
         slot.setSlotID(slotCounter);
@@ -56,6 +56,22 @@ public class ParkingAttendant implements Subject {
         vehicleData.put(slot, vehicle);
         this.notifyObservers(vehicleData.size());
         return vehicleData;
+    }
+
+    public void largeParking(Vehicle vehicle, DriverType driverType) {
+        vehicle.setDriverType(driverType);
+        vehicle.setVehicleType(VehicleType.LARGE);
+        Slot slot = new Slot();
+        slotCounter = slotCounter + 1;
+        slot.setSlotID(slotCounter);
+        slot.setArrivalTime(LocalTime.of(11, 10, 37));
+        ParkingLot lot = new ParkingLot(ParkingLotSystemUtilities.assignLot(slot.getSlotID()));
+        slot.setLot(lot);
+        vehicleData.put(slot, vehicle);
+        slotCounter = slotCounter + 1;
+        slot.setSlotID(slotCounter);
+        vehicleData.put(slot, vehicle);
+        this.notifyObservers(vehicleData.size());
     }
 
     public HashMap<Slot, Vehicle> unPark(Vehicle vehicle) throws ParkingLotSystemException {
