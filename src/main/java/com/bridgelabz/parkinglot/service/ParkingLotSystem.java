@@ -36,8 +36,8 @@ public class ParkingLotSystem {
         return vehicleData.containsValue(vehicle);
     }
 
-    public void park(Vehicle vehicle) throws ParkingLotSystemException {
-        vehicleData = parkingAttendant.park(vehicle);
+    public void park(Vehicle vehicle, DriverType driverType) throws ParkingLotSystemException {
+        vehicleData = parkingAttendant.park(vehicle, driverType);
     }
 
     public void unPark(Vehicle vehicle) throws ParkingLotSystemException {
