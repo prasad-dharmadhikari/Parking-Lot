@@ -15,6 +15,6 @@ public class Owner implements Observer {
 
     @Override
     public void sendParkingStatus(int currentlyOccupiedSlots, int parkingLotCapacity) {
-        flag = (currentlyOccupiedSlots > parkingLotCapacity) ? Flag.PARKING_IS_FULL : Flag.PARKING_IS_VACANT;
+        flag = (currentlyOccupiedSlots == parkingLotCapacity) ? Flag.PARKING_IS_FULL : Flag.PARKING_IS_VACANT;
     }
 }

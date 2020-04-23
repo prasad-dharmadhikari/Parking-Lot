@@ -13,6 +13,6 @@ public class AirportPersonnel implements Observer {
 
     @Override
     public void sendParkingStatus(int currentlyOccupiedSlots, int parkingLotCapacity) {
-        isParkingFull = (currentlyOccupiedSlots > parkingLotCapacity)? true : false;
+        isParkingFull = (currentlyOccupiedSlots == parkingLotCapacity)? true : false;
     }
 }

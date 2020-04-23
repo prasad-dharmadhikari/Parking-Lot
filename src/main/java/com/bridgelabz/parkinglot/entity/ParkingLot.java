@@ -11,10 +11,9 @@ public class ParkingLot {
         this.lotID = lotId;
     }
 
+
     @Override
     public String toString() {
-        return "ParkingLot{" +
-                "lotID=" + lotID +
-                '}';
+        return "lotID=" + lotID;
     }
 }

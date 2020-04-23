@@ -3,12 +3,24 @@ package com.bridgelabz.parkinglot.entity;
 import java.time.LocalTime;
 
 public class Slot {
-    int slotID;
+    public int slotID;
     public LocalTime arrivalTime;
     public LocalTime departureTime;
+    public ParkingLot lot;
 
-    public Slot(int slotID, LocalTime arrivalTime) {
+    public int getSlotID() {
+        return slotID;
+    }
+
+    public void setSlotID(int slotID) {
         this.slotID = slotID;
+    }
+
+    public LocalTime getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(LocalTime arrivalTime) {
         this.arrivalTime = arrivalTime;
     }
 
@@ -20,12 +32,21 @@ public class Slot {
         this.departureTime = departureTime;
     }
 
+    public ParkingLot getLot() {
+        return lot;
+    }
+
+    public void setLot(ParkingLot lot) {
+        this.lot = lot;
+    }
+
     @Override
     public String toString() {
         return "Slot{" +
                 "slotID=" + slotID +
                 ", arrivalTime=" + arrivalTime +
                 ", departureTime=" + departureTime +
+                ", lot=" + lot +
                 '}';
     }
 }
