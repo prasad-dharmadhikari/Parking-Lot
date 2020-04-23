@@ -1,9 +1,5 @@
 package com.bridgelabz.parkinglot.entity;
 
-import com.bridgelabz.parkinglot.utility.ParkingAttendant;
-
-import java.time.LocalTime;
-
 public class ParkingLot {
     public int lotID = 0;
 
