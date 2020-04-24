@@ -25,8 +25,9 @@ public class ParkingLotSystemTest {
     Vehicle vehicle6 = new Vehicle("Ford Figo", 6754, "FORD", "White");
     Vehicle vehicle7 = new Vehicle("Santro", 9317, "HYUNDAI", "White");
     Vehicle vehicle8 = new Vehicle("Audi R8", 4856, "AUDI", "Black");
-    Vehicle vehicle9 = new Vehicle("Polo", 8642, "VOLKSWAGEN", "Blue");
+    Vehicle vehicle9 = new Vehicle("BMW X7", 8642, "BMW", "Blue");
     Vehicle vehicle10 = new Vehicle("BMW X5", 5863, "BMW", "Blue");
+    Vehicle vehicle11 = new Vehicle("Innova", 2631, "TOYOTA", "Blue");
 
     @Before
     public void setUp() throws Exception {
@@ -211,5 +212,18 @@ public class ParkingLotSystemTest {
         parkingLotSystem.park(vehicle6, DriverType.NORMAL, VehicleType.SMALL);
         parkingLotSystem.park(vehicle7, DriverType.NORMAL, VehicleType.SMALL);
         Assert.assertEquals(3, parkingLotSystem.getWhiteCars());
+    }
+
+    @Test
+    public void givenParkingLotOfVehicles_ShouldReturnNoOfBlueToyotaCars() throws ParkingLotSystemException {
+        parkingLotSystem.park(vehicle1, DriverType.NORMAL, VehicleType.SMALL);
+        parkingLotSystem.park(vehicle2, DriverType.NORMAL, VehicleType.SMALL);
+        parkingLotSystem.park(vehicle3, DriverType.NORMAL, VehicleType.SMALL);
+        parkingLotSystem.park(vehicle4, DriverType.NORMAL, VehicleType.SMALL);
+        parkingLotSystem.park(vehicle5, DriverType.NORMAL, VehicleType.SMALL);
+        parkingLotSystem.park(vehicle6, DriverType.NORMAL, VehicleType.SMALL);
+        parkingLotSystem.park(vehicle7, DriverType.NORMAL, VehicleType.SMALL);
+        parkingLotSystem.park(vehicle11, DriverType.NORMAL, VehicleType.SMALL);
+        Assert.assertEquals(2, parkingLotSystem.getBlueToyotaCars());
     }
 }
